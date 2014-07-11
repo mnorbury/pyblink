@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-        name         = "lcogt-dateutils",
+        name         = "pyblink",
         version      = "0.1",
         description  = "Utility functions for manipulating datetimes",
         author       = "Martin Norbury",

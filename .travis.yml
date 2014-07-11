@@ -5,6 +5,6 @@ python:
 install:
     pip install coveralls
 script:
-    coverage run --source=lcogt setup.py test
+    coverage run setup.py test
 after_success:
     coveralls
