@@ -10,5 +10,8 @@ setup(
         packages     = find_packages('src'),
         package_dir  = {'':'src'},
         test_suite   = "nose.collector",
-        install_requires = []
+        install_requires = [],
+        entry_points = {
+                    'console_scripts' : ['pyblink_test = scripts:pyblink_test']
+                    }
 )

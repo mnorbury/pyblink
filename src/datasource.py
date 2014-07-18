@@ -21,6 +21,14 @@ class JenkinsDataSource(object):
         self._buildhost = buildhost
 
     def retrieve_data(self):
+        ''' Return build data in the form of:-
+            
+            {
+               'color' : 'red',
+               'activity' : 1,
+            }
+        '''
+        
         jobs = self._read_jobs()
         activity = len([x for x in jobs if 'anime' in x['color']])
         color = self._aggregate(jobs)
