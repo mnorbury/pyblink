@@ -5,6 +5,8 @@ Created on Jul 17, 2014
 '''
 import argparse
 import time
+import signal
+import sys
 
 import outputsource
 import pattern
@@ -19,6 +21,14 @@ def pyblink_test():
 
     factory = pattern.pattern_factory(args.loop_time, args.decay_time)
     blink = outputsource.Blink1Indicator(factory)
+
+
+    # Attach ctrl-c handler
+    def signal_handler(signal, frame):
+        blink.close()
+        sys.exit(0)
+    signal.signal(signal.SIGINT, signal_handler)
+
     while True:
         blink.update(args.__dict__)
         time.sleep(args.loop_time)

@@ -27,3 +27,7 @@ class Blink1Indicator(object):
         self._client.fade_to_rgb(100, *rgb)
 
         self._last_data = data
+
+    def close(self):
+        self._client.off()
+        self._client.close()

@@ -3,42 +3,35 @@ Created on Jul 17, 2014
 
 @author: mnorbury
 '''
-import threading
-import time
+import logging
+_LOGGER = logging.getLogger(__name__)
 
-class Controller(threading.Thread):
-    def __init__(self, datasource, hardware):
-        super(Controller, self).__init__()
-
-        self._datasource = datasource
-        self._hardware = hardware
-
-        self._count = 0
-        self._loop_period = 0.1
-        self._running = True
-
-        self._data = None
-
-    def stop(self):
-        self._running = False
-
-    def run(self):
-        while self._running:
-            if not self._count % 10:
-                print('Get data')
-                self._data = self._datasource.retrieve_data()
-            print('Update hardware')
-            self._hardware.update(self._data)
-            self._count += 1
-            time.sleep(self._loop_period)
+from controller import Controller
+from datasource import JenkinsDataSource
+from outputsource import Blink1Indicator
+import pattern
+import signal
 
 if __name__ == '__main__':
-    from datasource import JenkinsDataSource
-    from outputsource import Blink1Indicator
-    import pattern
 
+    # Configurable inputs
     buildhost = 'buildsba:8085'
+    loop_period = 0.1
+    decay_period = 600
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)-15s %(message)s')
 
-    pattern_factory = pattern.pattern_factory(0.1, 600)
-    controller = Controller(JenkinsDataSource(buildhost), Blink1Indicator(pattern_factory))
+    # Build controller
+    pattern_factory = pattern.pattern_factory(loop_period, decay_period)
+    input_source = JenkinsDataSource(buildhost)
+    output_source = Blink1Indicator(pattern_factory)
+    controller = Controller(input_source, output_source)
+
+    # Attach ctrl-c handler
+    def signal_handler(signal, frame):
+        output_source.close()
+        controller.stop()
+    signal.signal(signal.SIGINT, signal_handler)
+
+    # Start controller
     controller.start()
+    controller.join()

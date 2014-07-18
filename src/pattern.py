@@ -1,25 +1,33 @@
+'''
+pattern.py - Module for creating light patterns.
+
+Author:
+    Martin Norbury (mnorbury@lcogt.net)
+
+July 2014
+'''
+import itertools
 from math import cos, pi
 
+def pattern_factory(loop_time, decay_time = None):
+    ''' Create a pattern. '''
 
-def pattern_factory(loop_time, decay_time):
+    def _signal(amplitude, frequency, time):
+        ''' Light signal for a given channel. '''
 
-    def _pulse_signal(amplitude, frequency, time):
         decay = max((decay_time - time)/decay_time, 0.1) if decay_time else 1
-
         y = decay * amplitude * (cos(pi * 2 * time * frequency) + 1.0)
 
-        return y
+        return int(y)
 
     def pulse_rgb(target, frequency=1):
+        ''' Pulse the RGB channels. '''
 
-        count = 0
-
-        amplitude = [int(x / 2.0) for x in target]
-
-        while True:
-            current = [int(_pulse_signal(x, frequency, count * loop_time))
-                       for x in amplitude]
+        amplitude = [int(channel / 2.0) for channel in target]
+        for count in itertools.count():
+            time = count * loop_time
+            current = [_signal(channel, frequency, time) for channel in amplitude]
             yield tuple(current)
-            count += 1
 
     return pulse_rgb
+

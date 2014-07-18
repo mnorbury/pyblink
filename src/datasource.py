@@ -8,12 +8,11 @@ Author:
 
 July 2014
 '''
-from urllib import request
-import json
 import logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
+from urllib.request import urlopen
+import json
 
 class JenkinsDataSource(object):
 
@@ -22,13 +21,13 @@ class JenkinsDataSource(object):
 
     def retrieve_data(self):
         ''' Return build data in the form of:-
-            
+
             {
                'color' : 'red',
                'activity' : 1,
             }
         '''
-        
+
         jobs = self._read_jobs()
         activity = len([x for x in jobs if 'anime' in x['color']])
         color = self._aggregate(jobs)
@@ -46,7 +45,7 @@ class JenkinsDataSource(object):
 
         buildurl = 'http://{0}/api/json'.format(self._buildhost)
 
-        connection = request.urlopen(buildurl)
+        connection = urlopen(buildurl)
         data = connection.read()
         connection.close()
 
