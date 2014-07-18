@@ -35,8 +35,10 @@ class Controller(threading.Thread):
 if __name__ == '__main__':
     from datasource import JenkinsDataSource
     from outputsource import Blink1Indicator
+    import pattern
 
     buildhost = 'buildsba:8085'
 
-    controller = Controller(JenkinsDataSource(buildhost), Blink1Indicator())
+    pattern_factory = pattern.pattern_factory(0.1, 600)
+    controller = Controller(JenkinsDataSource(buildhost), Blink1Indicator(pattern_factory))
     controller.start()
