@@ -18,7 +18,8 @@ if __name__ == '__main__':
     buildhost = 'buildsba:8085'
     loop_period = 0.1
     decay_period = 600
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)-15s %(message)s')
+    level = getattr(logging, 'info'.upper())
+    logging.basicConfig(level=level, format='%(asctime)-15s %(message)s')
 
     # Build controller
     pattern_factory = pattern.pattern_factory(loop_period, decay_period)
