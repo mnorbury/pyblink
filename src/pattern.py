@@ -1,33 +1,33 @@
 '''
 pattern.py - Module for creating light patterns.
 
-Author:
-    Martin Norbury (mnorbury@lcogt.net)
-
-July 2014
+:author: Martin Norbury
 '''
 import itertools
-from math import cos, pi
+from math import cos, pi, ceil
 
-def pattern_factory(loop_time, decay_time = None):
-    ''' Create a pattern. '''
+def pulse_rgb(rgb, loop_time, frequency=1, decay_time=None):
+    ''' Pulse the RGB channels.
 
-    def _signal(amplitude, frequency, time):
-        ''' Light signal for a given channel. '''
+    :param rgb: The target RGB e.g. (255, 0, 0)
+    :param loop_time: The time between each loop call e.g. 0.1s
+    :param frequency: The frequency of the pulse (default 1Hz)
+    :param decay_time: The amplitude decay time (s)
 
-        decay = max((decay_time - time)/decay_time, 0.1) if decay_time else 1
-        y = decay * amplitude * (cos(pi * 2 * time * frequency) + 1.0)
+    :return: A generator.
+    '''
 
-        return int(y)
+    for count in itertools.count():
+        time = count * loop_time
+        current = [_cosine(channel, frequency, time, decay_time)
+                   for channel in rgb]
+        yield tuple(current)
 
-    def pulse_rgb(target, frequency=1):
-        ''' Pulse the RGB channels. '''
+def _cosine(amplitude, frequency, time, decay_time):
+    ''' Light signal for a given channel. '''
 
-        amplitude = [int(channel / 2.0) for channel in target]
-        for count in itertools.count():
-            time = count * loop_time
-            current = [_signal(channel, frequency, time) for channel in amplitude]
-            yield tuple(current)
+    decay = max((decay_time - time)/decay_time, 0.1) if decay_time else 1
+    y = decay * amplitude * (cos(pi * 2 * time * frequency) + 1.0)/2.0
 
-    return pulse_rgb
+    return ceil(y)
 

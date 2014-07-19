@@ -17,8 +17,8 @@ if __name__ == '__main__':
     # Configurable inputs
     buildhost = 'buildsba:8085'
     loop_period = 0.1
-    decay_period = 600
-    level = getattr(logging, 'info'.upper())
+    decay_period = 30
+    level = getattr(logging, 'debug'.upper())
     logging.basicConfig(level=level, format='%(asctime)-15s %(message)s')
 
     # Build controller
