@@ -3,7 +3,7 @@ test_pattern.py - Test cases for the pattern module.
 
 :author: Martin Norbury
 '''
-from nose.tools import with_setup, eq_
+from nose.tools import eq_
 
 from pattern import pulse_rgb
 
