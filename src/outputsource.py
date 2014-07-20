@@ -4,13 +4,15 @@ Created on Jul 17, 2014
 @author: mnorbury
 '''
 import webcolors
+import pattern
 from blink1 import blink1
 
 
 class Blink1Indicator(object):
     ''' Blink1 LED output source. '''
 
-    def __init__(self, pattern_factory, client=blink1.Blink1()):
+    def __init__(self, pattern_factory=pattern.pulse_rgb,
+                 client=blink1.Blink1()):
         '''
         :param pattern_factory: Function for creating pattern values.
         '''

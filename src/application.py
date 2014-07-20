@@ -9,7 +9,6 @@ _LOGGER = logging.getLogger(__name__)
 from controller import Controller
 from datasource import JenkinsDataSource
 from outputsource import Blink1Indicator
-import pattern
 import signal
 
 if __name__ == '__main__':
@@ -22,9 +21,8 @@ if __name__ == '__main__':
     logging.basicConfig(level=level, format='%(asctime)-15s %(message)s')
 
     # Build controller
-    pattern_factory = pattern.pattern_factory(loop_period, decay_period)
     input_source = JenkinsDataSource(buildhost)
-    output_source = Blink1Indicator(pattern_factory)
+    output_source = Blink1Indicator()
     controller = Controller(input_source, output_source)
 
     # Attach ctrl-c handler
