@@ -4,7 +4,6 @@ test_outputsource.py - Unit tests for the outputsource module.
 :author: Martin Norbury
 '''
 import mock
-from nose.tools import eq_
 
 from outputsource import Blink1Indicator
 
