@@ -1,15 +1,16 @@
-'''
-Created on Jul 17, 2014
+"""
+The main application file.
 
-@author: mnorbury
-'''
+:author: mnorbury
+"""
 import logging
+import signal
 _LOGGER = logging.getLogger(__name__)
 
 from controller import Controller
 from datasource import JenkinsDataSource
 from outputsource import Blink1Indicator
-import signal
+
 
 if __name__ == '__main__':
 

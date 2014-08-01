@@ -22,7 +22,6 @@ def pyblink_test():
     factory = pattern.pattern_factory(args.loop_time, args.decay_time)
     blink = outputsource.Blink1Indicator(factory)
 
-
     # Attach ctrl-c handler
     def signal_handler(signal, frame):
         blink.close()
