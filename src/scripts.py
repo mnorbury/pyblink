@@ -1,17 +1,20 @@
-'''
-Created on Jul 17, 2014
+"""
+Module containing script entry points.
 
-@author: mnorbury
-'''
+:author: mnorbury
+"""
 import argparse
 import time
-import signal
 import sys
+import signal
 
 import outputsource
-import pattern
+
+
 
 def pyblink_test():
+    """ Simple command line utility for testing the blink(1) """
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--color', default='green', help='Color to display')
     parser.add_argument('--activity', default=1, type=int, help='Activity value')
@@ -19,9 +22,7 @@ def pyblink_test():
     parser.add_argument('--decay_time', default=600, type=float, help='Decay Time (s)')
     args = parser.parse_args()
 
-    factory = pattern.pattern_factory(args.loop_time, args.decay_time)
-    blink = outputsource.Blink1Indicator(factory)
-
+    blink = outputsource.Blink1Indicator(args.loop_time)
 
     # Attach ctrl-c handler
     def signal_handler(signal, frame):
@@ -30,5 +31,5 @@ def pyblink_test():
     signal.signal(signal.SIGINT, signal_handler)
 
     while True:
-        blink.update(args.__dict__)
+        blink.update(dict(color=args.color,activity=args.activity))
         time.sleep(args.loop_time)

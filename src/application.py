@@ -1,28 +1,34 @@
-'''
-Created on Jul 17, 2014
+"""
+The main application file.
 
-@author: mnorbury
-'''
+:author: mnorbury
+"""
 import logging
+import signal
+import argparse
+
 _LOGGER = logging.getLogger(__name__)
 
 from controller import Controller
 from datasource import JenkinsDataSource
 from outputsource import Blink1Indicator
-import signal
+
 
 if __name__ == '__main__':
 
+    parser = argparse.ArgumentParser(description="Jenkins build monitor.")
+    parser.add_argument('-build_host', default='buildsba:8085')
+    parser.add_argument('-loop_period', default=0.1)
+    parser.add_argument('-decay_period', default=30)
+    parser.add_argument('-log_level', default='info')
+    arguments = parser.parse_args()
+
     # Configurable inputs
-    buildhost = 'buildsba:8085'
-    loop_period = 0.1
-    decay_period = 30
-    level = getattr(logging, 'debug'.upper())
-    logging.basicConfig(level=level, format='%(asctime)-15s %(message)s')
+    logging.basicConfig(level=(getattr(logging, arguments.log_level.upper())), format='%(asctime)-15s %(message)s')
 
     # Build controller
-    input_source = JenkinsDataSource(buildhost)
-    output_source = Blink1Indicator()
+    input_source = JenkinsDataSource(arguments.build_host)
+    output_source = Blink1Indicator(arguments.loop_period)
     controller = Controller(input_source, output_source)
 
     # Attach ctrl-c handler

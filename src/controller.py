@@ -1,21 +1,22 @@
-'''
+"""
 Created on Jul 17, 2014
 
-@author: mnorbury
-'''
+:author: mnorbury
+"""
 import logging
 _LOGGER = logging.getLogger(__name__)
 
 import threading
 import time
 
-class Controller(threading.Thread):
-    ''' Main application controller. '''
 
-    def __init__(self, datasource, hardware):
+class Controller(threading.Thread):
+    """ Main application controller. """
+
+    def __init__(self, data_source, hardware):
         super(Controller, self).__init__(daemon=True)
 
-        self._datasource = datasource
+        self._data_source = data_source
         self._hardware = hardware
 
         self._count = 0
@@ -28,7 +29,7 @@ class Controller(threading.Thread):
         while self._running:
             if not self._count % 10:
                 _LOGGER.debug('Get data')
-                self._data = self._datasource.retrieve_data()
+                self._data = self._data_source.retrieve_data()
             _LOGGER.debug('Update hardware')
             self._hardware.update(self._data)
             self._count += 1
@@ -36,4 +37,3 @@ class Controller(threading.Thread):
 
     def stop(self):
         self._running = False
-
