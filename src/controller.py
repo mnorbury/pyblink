@@ -25,8 +25,11 @@ class Controller(threading.Thread):
 
         self._data = None
 
-    def run(self):
-        while self._running:
+    def run(self, running_checker=None):
+
+        running = running_checker if running_checker else lambda: self._running
+
+        while running():
             if not self._count % 10:
                 _LOGGER.debug('Get data')
                 self._data = self._data_source.retrieve_data()
