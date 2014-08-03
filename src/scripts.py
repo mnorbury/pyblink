@@ -11,7 +11,6 @@ import signal
 import outputsource
 
 
-
 def pyblink_test():
     """ Simple command line utility for testing the blink(1) """
 
