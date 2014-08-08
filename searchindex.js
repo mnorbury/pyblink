@@ -1,0 +1,1 @@
+Search.setIndex({envversion:42,terms:{content:0,index:[],modul:[],search:[],page:[]},objtypes:{},objnames:{},filenames:["index"],titles:["Welcome to Pyblink&#8217;s documentation!"],objects:{},titleterms:{pyblink:0,document:0,welcom:0,indic:[],tabl:[]}})
