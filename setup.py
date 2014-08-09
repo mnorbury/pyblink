@@ -10,7 +10,7 @@ setup(
     packages=find_packages('src'),
     package_dir={'': 'src'},
     test_suite="nose.collector",
-    install_requires=['blink1', 'nose', 'mock', ],
+    install_requires=['blink1', 'nose', 'mock', 'sqlalchemy', 'mysql-connector-python'],
     entry_points={
         'console_scripts': ['monitor_jenkins = scripts:monitor_jenkins']
     }

@@ -1,10 +1,36 @@
 """
 pattern.py - Module for creating light patterns.
 
-:author: Martin Norbury
+:author: Martin Norbury (martin.norbury@gmail.com)
 """
 import itertools
-from math import cos, pi, ceil
+from math import cos, pi, ceil, floor
+import webcolors
+
+
+def color_sequence(targets, ramp_time=10):
+    """ Generate a color sequence.
+
+    :param targets: Target colors e.g. ['red', 'blue', 'green']
+    :param ramp_time: Time to ramp up to target RGB.
+    :return: Color sequence generator. This generator is infinite and continues to return the last value once the
+    variable components are complete.
+    """
+    target_rgb = (0, 0, 0)
+
+    for target in targets:
+        target_rgb = webcolors.name_to_rgb(target)
+
+        delta_rgb = [x/ramp_time for x in target_rgb]
+
+        current_rgb = (0, 0, 0)
+        while current_rgb < target_rgb:
+            yield current_rgb
+            current_rgb = tuple([floor(x+delta_rgb[i]) for i, x in enumerate(current_rgb)])
+        yield target_rgb
+
+    while True:
+        yield target_rgb
 
 
 def pulse_rgb(rgb, loop_time, frequency=1, decay_time=None):
