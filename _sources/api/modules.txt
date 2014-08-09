@@ -1,10 +1,9 @@
-API
+src
 ===
 
 .. toctree::
    :maxdepth: 4
 
-   application
    controller
    datasource
    outputsource

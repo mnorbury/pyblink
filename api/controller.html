@@ -26,7 +26,7 @@
     <link rel="top" title="Pyblink 0.1 documentation" href="../index.html" />
     <link rel="up" title="src" href="modules.html" />
     <link rel="next" title="datasource module" href="datasource.html" />
-    <link rel="prev" title="application module" href="application.html" /> 
+    <link rel="prev" title="src" href="modules.html" /> 
   </head>
   <body>
     <div class="header-wrapper">
@@ -34,7 +34,7 @@
         <div class="headertitle"><a
           href="../index.html">Pyblink 0.1 documentation</a></div>
         <div class="rel">
-          <a href="application.html" title="application module"
+          <a href="modules.html" title="src"
              accesskey="P">previous</a> |
           <a href="datasource.html" title="datasource module"
              accesskey="N">next</a> |
@@ -56,24 +56,33 @@
             
   <div class="section" id="module-controller">
 <span id="controller-module"></span><h1>controller module<a class="headerlink" href="#module-controller" title="Permalink to this headline">¶</a></h1>
-<p>Created on Jul 17, 2014</p>
+<p>Main application controller.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">author:</th><td class="field-body">mnorbury</td>
+<tr class="field-odd field"><th class="field-name">author:</th><td class="field-body">Martin Norbury (<a class="reference external" href="mailto:martin&#46;norbury&#37;&#52;&#48;gmail&#46;com">martin<span>&#46;</span>norbury<span>&#64;</span>gmail<span>&#46;</span>com</a>)</td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
 <dt id="controller.Controller">
-<em class="property">class </em><tt class="descclassname">controller.</tt><tt class="descname">Controller</tt><big>(</big><em>data_source</em><big>)</big><a class="reference internal" href="../_modules/controller.html#Controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#controller.Controller" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">controller.</tt><tt class="descname">Controller</tt><big>(</big><em>monitor_source</em><big>)</big><a class="reference internal" href="../_modules/controller.html#Controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#controller.Controller" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></tt></p>
 <p>Main application controller.</p>
 <dl class="method">
 <dt id="controller.Controller.run">
 <tt class="descname">run</tt><big>(</big><em>running_checker=None</em><big>)</big><a class="reference internal" href="../_modules/controller.html#Controller.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#controller.Controller.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Run the main controller.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>running_checker</strong> &#8211; Function to determine if we should continue.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="controller.Controller.stop">
@@ -95,7 +104,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../challenge.html">The Challenge</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="application.html">application module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">controller module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasource.html">datasource module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outputsource.html">outputsource module</a></li>
@@ -123,7 +131,7 @@
     <div class="footer-wrapper">
       <div class="footer">
         <div class="left">
-          <a href="application.html" title="application module"
+          <a href="modules.html" title="src"
              >previous</a> |
           <a href="datasource.html" title="datasource module"
              >next</a> |
