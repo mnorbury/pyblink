@@ -19,10 +19,9 @@ Welcome to Pyblink's documentation!
 
 The challenge is to code something awesome using the `blink(1) <http://thingm.com/products/blink-1.html>`_.
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
    installation
    challenge
+   api/modules
