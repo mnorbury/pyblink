@@ -13,32 +13,25 @@ import pattern
 class Blink1Indicator(object):
     """ Blink1 LED output source. """
 
-    def __init__(self, loop_frequency, pattern_factory=pattern.pulse_rgb, client=None):
-        """
-        :param pattern_factory: Function for creating pattern values.
-        """
-        self._pattern_factory = pattern_factory
+    def __init__(self, client=None):
         self._client = client if client else blink1.Blink1()
-        self._loop_frequency = loop_frequency
-        self._last_data = None
-        self._pattern = None
 
-    def update(self, data):
+        self._last_rgb = ()
+
+    def update_hardware(self, red, green, blue):
         """ Update the output source.
 
-        :param data: Data to use to update the output source.
+        :param red: Red value (0-255).
+        :param green: Green value (0-255).
+        :param blue: Blue value (0-255).
         """
 
-        if self._last_data != data:
-            target_rgb = webcolors.name_to_rgb(data['color'])
-            frequency = data['activity']
-            self._pattern = self._pattern_factory(target_rgb, self._loop_frequency, frequency, 60)
+        if self._last_rgb != (red, green, blue):
+            self._client.fade_to_rgb(100, red, green, blue)
 
-        rgb = next(self._pattern)
+        self._last_rgb = (red, green, blue)
 
-        self._client.fade_to_rgb(100, *rgb)
-
-        self._last_data = data
+        return
 
     def close(self):
         """ Close down the output source. """

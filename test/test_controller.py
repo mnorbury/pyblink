@@ -15,7 +15,7 @@ class TestController(object):
     def __init__(self):
         self.data_source = mock.MagicMock()
         self.hardware = mock.MagicMock()
-        self.controller = Controller(self.data_source, self.hardware)
+        self.controller = Controller(self.data_source)
         self._count = 0
         self._complete = 1
 
@@ -24,29 +24,28 @@ class TestController(object):
 
         self.controller.run(running_function)
 
-        eq_(self.data_source.retrieve_data.call_count, 1)
+        eq_(self.data_source.update_data.call_count, 1)
 
     def test_retrieve_data_two_times(self, mock_time):
         running_function = self._make_is_running(20)
 
         self.controller.run(running_function)
 
-        eq_(self.data_source.retrieve_data.call_count, 2)
+        eq_(self.data_source.update_data.call_count, 2)
 
     def test_update_hardware_each_loop(self, mock_time):
         running_function = self._make_is_running(20)
 
         self.controller.run(running_function)
 
-        eq_(self.hardware.update.call_count, 20)
+        eq_(self.data_source.update_hardware.call_count, 20)
 
-    def test_send_data_to_hardware(self, mock_time):
+    def test_update_hardware(self, mock_time):
         running_function = self._make_is_running(1)
 
         self.controller.run(running_function)
 
-        data = self.data_source.retrieve_data()
-        self.hardware.update.assert_called_with(data)
+        self.data_source.update_hardware.assert_called_with()
 
     def test_set_running_flag(self, mock_time):
         eq_(self.controller._running, True)

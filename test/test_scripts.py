@@ -1,34 +1,52 @@
 import mock
-import nose
 
 import scripts
 
 
-@mock.patch('scripts.time')
-@mock.patch('scripts.outputsource.Blink1Indicator')
 class TestScripts(object):
 
-    def __init__(self):
-        self._count = 0
+    @mock.patch('scripts._run_monitor_jenkins')
+    def test_default_arguments(self, mock_jenkins_monitor):
+        scripts.monitor_jenkins(['pyblink'])
 
-        self._loop_time = 0.1
+        mock_jenkins_monitor.assert_called_with('buildsba:8085', 0.1, 60)
 
-    def test_create_blink_indicator(self, mock_blink, mock_time):
-        scripts._run_pyblink_test([], self._running)
+    @mock.patch('scripts._run_monitor_jenkins')
+    def test_build_host_argument(self, mock_jenkins_monitor):
+        scripts.monitor_jenkins(['pyblink', '-build_host', 'localhost'])
 
-        mock_blink.assert_called_with(self._loop_time)
+        mock_jenkins_monitor.assert_called_with('localhost', 0.1, 60)
 
-    def test_call_to_blink_update_with_defaults(self, mock_blink, mock_time):
-        scripts._run_pyblink_test([], self._running)
+    @mock.patch('scripts._run_monitor_jenkins')
+    def test_loop_period_argument(self, mock_jenkins_monitor):
+        scripts.monitor_jenkins(['pyblink', '-loop_period', '0.5'])
 
-        mock_blink().update.assert_called_with(dict(color='green', activity=1))
+        mock_jenkins_monitor.assert_called_with('buildsba:8085', 0.5, 60)
 
-    def test_call_to_blink_update_with_custom_color(self, mock_blink, mock_time):
-        scripts._run_pyblink_test(['--color', 'red', '--activity', '2'], self._running)
+    @mock.patch('scripts._run_monitor_jenkins')
+    def test_decay_time_argument(self, mock_jenkins_monitor):
+        scripts.monitor_jenkins(['pyblink', '-decay_period', '30'])
 
-        mock_blink().update.assert_called_with(dict(color='red', activity=2))
+        mock_jenkins_monitor.assert_called_with('buildsba:8085', 0.1, 30)
 
+    @mock.patch('scripts._create_controller')
+    def test_creating_controller(self, mock_create_controller):
+        scripts._run_monitor_jenkins(1, 2, 3)
 
-    def _running(self):
-        self._count += 1
-        return not self._count == 2
+        mock_create_controller.assert_called_with(1, 2, 3)
+
+    @mock.patch('scripts._create_controller')
+    def test_starting_controller(self, mock_create_controller):
+        mock_controller = mock_create_controller()
+
+        scripts._run_monitor_jenkins(1, 2, 3)
+
+        mock_controller.start.assert_called_with()
+
+    @mock.patch('scripts._create_controller')
+    def test_thread_join(self, mock_create_controller):
+        mock_controller = mock_create_controller()
+
+        scripts._run_monitor_jenkins(1, 2, 3)
+
+        mock_controller.join.assert_called_with()

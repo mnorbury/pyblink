@@ -4,36 +4,45 @@ Module containing script entry points.
 :author: mnorbury
 """
 import argparse
-import time
-import sys
-import signal
+import logging
 
+from controller import Controller
+from datasource import JenkinsDataSource
 import outputsource
+import sys
 
-def pyblink_test():
-    """ Simple command line utility for testing the blink(1) """
 
-    _run_pyblink_test(sys.argv[1:])
+def monitor_jenkins(arguments=None):
+    arguments = arguments if arguments else sys.argv
 
-def _run_pyblink_test(argv, running=lambda: True):
+    parser = argparse.ArgumentParser(description="Jenkins build monitor.")
+    parser.add_argument('-build_host', default='buildsba:8085')
+    parser.add_argument('-loop_period', type=float, default=0.1)
+    parser.add_argument('-decay_period', type=float, default=60)
+    parser.add_argument('-log_level', default='info')
+    arguments = parser.parse_args(arguments[1:])
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--color', default='green', help='Color to display')
-    parser.add_argument('--activity', default=1, type=int, help='Activity value')
-    parser.add_argument('--loop_time', default=0.1, type=float, help='Loop Time (s)')
-    parser.add_argument('--decay_time', default=600, type=float, help='Decay Time (s)')
-    args = parser.parse_args(argv)
+    logging.basicConfig(level=(getattr(logging, arguments.log_level.upper())), format='%(asctime)-15s %(message)s')
 
-    blink = outputsource.Blink1Indicator(args.loop_time)
+    _run_monitor_jenkins(arguments.build_host,
+                         arguments.loop_period,
+                         arguments.decay_period,)
 
-    # Attach ctrl-c handler
-    def signal_handler(signal, frame):
-        blink.close()
-        sys.exit(0)
+    return
 
-    signal.signal(signal.SIGINT, signal_handler)
-    while running():
-        blink.update(dict(color=args.color, activity=args.activity))
-        time.sleep(args.loop_time)
 
+def _run_monitor_jenkins(build_host, loop_period, decay_period):
+
+    controller = _create_controller(build_host, loop_period, decay_period)
+    controller.start()
+    controller.join()
+
+    return
+
+
+def _create_controller(build_host, loop_period, decay_period):
+    input_source = JenkinsDataSource(build_host, loop_period, decay_period)
+    controller = Controller(input_source)
+
+    return controller
 

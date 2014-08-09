@@ -12,6 +12,6 @@ setup(
     test_suite="nose.collector",
     install_requires=['blink1', 'nose', 'mock', ],
     entry_points={
-        'console_scripts': ['pyblink_test = scripts:pyblink_test']
+        'console_scripts': ['monitor_jenkins = scripts:monitor_jenkins']
     }
 )
