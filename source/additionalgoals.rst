@@ -1,8 +1,8 @@
 Additional Goals
 ================
 
-* **Python 3.x:** Since the Blink api uses Python3.x, this will be an opportunity to user newer versions of Python.
-* **Generators:** The Blink patterns can easily be produced using patterns e.g. the pulse pattern generator::
+* **Python 3.x:** Since the Blink api uses Python3.x, this will be an opportunity to use newer versions of Python.
+* **Generators:** The Blink patterns can easily be produced using generators e.g. the pulse pattern generator::
 
     def pulse_rgb(rgb, loop_time, frequency=1, decay_time=None):
         """ Pulse the RGB channels.
