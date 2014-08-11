@@ -50,9 +50,9 @@
             
   <h1>Source code for controller</h1><div class="highlight"><pre>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Created on Jul 17, 2014</span>
+<span class="sd">Main application controller.</span>
 
-<span class="sd">:author: mnorbury</span>
+<span class="sd">:author: Martin Norbury (martin.norbury@gmail.com)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="n">_LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -65,13 +65,13 @@
 <div class="viewcode-block" id="Controller"><a class="viewcode-back" href="../api/controller.html#controller.Controller">[docs]</a><span class="k">class</span> <span class="nc">Controller</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Main application controller. &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_source</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_source</span><span class="p">,</span> <span class="n">loop_period</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Controller</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">daemon</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_source</span> <span class="o">=</span> <span class="n">data_source</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loop_period</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loop_period</span> <span class="o">=</span> <span class="n">loop_period</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="bp">True</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="bp">None</span>
@@ -113,6 +113,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../jenkins.html">Jenkins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../additionalgoals.html">Additional Goals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">API</a></li>
 </ul>
 
           <h3 style="margin-top: 1.5em;">Search</h3>

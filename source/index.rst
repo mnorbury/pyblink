@@ -19,3 +19,4 @@ Welcome to Pyblink's documentation!
    jenkins
    additionalgoals
    installation
+   api/modules

@@ -52,7 +52,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Module containing script entry points.</span>
 
-<span class="sd">:author: mnorbury</span>
+<span class="sd">:author: Martin Norbury (martin.norbury@gmail.com)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -93,7 +93,7 @@
 
 <span class="k">def</span> <span class="nf">_create_controller</span><span class="p">(</span><span class="n">build_host</span><span class="p">,</span> <span class="n">loop_period</span><span class="p">,</span> <span class="n">decay_period</span><span class="p">):</span>
     <span class="n">input_source</span> <span class="o">=</span> <span class="n">JenkinsDataSource</span><span class="p">(</span><span class="n">build_host</span><span class="p">,</span> <span class="n">loop_period</span><span class="p">,</span> <span class="n">decay_period</span><span class="p">)</span>
-    <span class="n">controller</span> <span class="o">=</span> <span class="n">Controller</span><span class="p">(</span><span class="n">input_source</span><span class="p">)</span>
+    <span class="n">controller</span> <span class="o">=</span> <span class="n">Controller</span><span class="p">(</span><span class="n">input_source</span><span class="p">,</span> <span class="n">loop_period</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">controller</span>
 </pre></div>
@@ -109,6 +109,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../jenkins.html">Jenkins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../additionalgoals.html">Additional Goals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">API</a></li>
 </ul>
 
           <h3 style="margin-top: 1.5em;">Search</h3>
