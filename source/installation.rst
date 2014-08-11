@@ -10,3 +10,7 @@ Installation
     > cd pyblink
     > pip install .
     > python setup develop
+
+#. Run the project::
+
+   > monitor_jenkins
