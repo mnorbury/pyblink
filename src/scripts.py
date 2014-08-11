@@ -1,7 +1,7 @@
 """
 Module containing script entry points.
 
-:author: mnorbury
+:author: Martin Norbury (martin.norbury@gmail.com)
 """
 import argparse
 import logging
@@ -42,7 +42,7 @@ def _run_monitor_jenkins(build_host, loop_period, decay_period):
 
 def _create_controller(build_host, loop_period, decay_period):
     input_source = JenkinsDataSource(build_host, loop_period, decay_period)
-    controller = Controller(input_source)
+    controller = Controller(input_source, loop_period)
 
     return controller
 

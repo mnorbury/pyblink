@@ -1,13 +1,9 @@
 """
-Created on Jul 17, 2014
+Module of output sources.
 
-@author: mnorbury
+:author: Martin Norbury (martin.norbury@gmail.com)
 """
 from blink1 import blink1
-
-import webcolors
-
-import pattern
 
 
 class Blink1Indicator(object):

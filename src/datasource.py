@@ -9,7 +9,6 @@ import logging
 import webcolors
 
 import outputsource
-
 import pattern
 
 

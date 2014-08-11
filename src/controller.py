@@ -1,7 +1,7 @@
 """
-Created on Jul 17, 2014
+Main application controller.
 
-:author: mnorbury
+:author: Martin Norbury (martin.norbury@gmail.com)
 """
 import logging
 _LOGGER = logging.getLogger(__name__)
@@ -14,13 +14,13 @@ import signal
 class Controller(threading.Thread):
     """ Main application controller. """
 
-    def __init__(self, data_source):
+    def __init__(self, data_source, loop_period=0.1):
         super(Controller, self).__init__(daemon=True)
 
         self._data_source = data_source
 
         self._count = 0
-        self._loop_period = 0.1
+        self._loop_period = loop_period
         self._running = True
 
         self._data = None
