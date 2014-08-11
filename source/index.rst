@@ -13,8 +13,9 @@ Welcome to Pyblink's documentation!
     :align: center
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    introduction
    jenkins
+   additionalgoals
    installation

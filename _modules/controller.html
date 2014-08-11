@@ -50,14 +50,9 @@
             
   <h1>Source code for controller</h1><div class="highlight"><pre>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Main application controller.</span>
+<span class="sd">Created on Jul 17, 2014</span>
 
-<span class="sd">.. highlight:: python</span>
-
-<span class="sd">    controller = Controller()</span>
-<span class="sd">    controller.run()</span>
-
-<span class="sd">:author: Martin Norbury (martin.norbury@gmail.com)</span>
+<span class="sd">:author: mnorbury</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="n">_LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -70,13 +65,10 @@
 <div class="viewcode-block" id="Controller"><a class="viewcode-back" href="../api/controller.html#controller.Controller">[docs]</a><span class="k">class</span> <span class="nc">Controller</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Main application controller. &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">monitor_source</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param monitor_source: The monitor to use.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_source</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Controller</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">daemon</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_monitor_source</span> <span class="o">=</span> <span class="n">monitor_source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_source</span> <span class="o">=</span> <span class="n">data_source</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loop_period</span> <span class="o">=</span> <span class="mf">0.1</span>
@@ -87,18 +79,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_register_exit_handler</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Controller.run"><a class="viewcode-back" href="../api/controller.html#controller.Controller.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">running_checker</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Run the main controller.</span>
 
-<span class="sd">        :param running_checker: Function to determine if we should continue.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">running</span> <span class="o">=</span> <span class="n">running_checker</span> <span class="k">if</span> <span class="n">running_checker</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_running</span>
 
         <span class="k">while</span> <span class="n">running</span><span class="p">():</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">%</span> <span class="mi">10</span><span class="p">:</span>
                 <span class="n">_LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Get data&#39;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_monitor_source</span><span class="o">.</span><span class="n">update_data</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_source</span><span class="o">.</span><span class="n">update_data</span><span class="p">()</span>
             <span class="n">_LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Update hardware&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_monitor_source</span><span class="o">.</span><span class="n">update_hardware</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_source</span><span class="o">.</span><span class="n">update_hardware</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loop_period</span><span class="p">)</span>
 </div>
@@ -107,12 +96,10 @@
 </div>
     <span class="k">def</span> <span class="nf">_register_exit_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">signal_handler</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_monitor_source</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_source</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 
-        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">signal_handler</span><span class="p">)</span>
-
-        <span class="k">return</span></div>
+        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">signal_handler</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -122,9 +109,10 @@
         <div class="sidebar">
           <h3>Table Of Contents</h3>
           <ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jenkins.html">Jenkins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../additionalgoals.html">Additional Goals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../challenge.html">The Challenge</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">src</a></li>
 </ul>
 
           <h3 style="margin-top: 1.5em;">Search</h3>
