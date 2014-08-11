@@ -1,0 +1,37 @@
+Jenkins
+=======
+
+Jenkins is a Java-based Continuous Integration (CI) system. At LCO, Jenkins is used to build, test and deploy both
+Java and Python software. Each software project can be in one of three build states: successful, unstable or failed.
+In addition, a project can also be in a state of building.
+
+Jenkins & Blink(1)
+==================
+
+The various build states are mapped to the `blink(1) <http://thingm.com/products/blink-1.html>`_ as follows:-
+
+.. figure:: _static/Blink1Color.png
+    :align: center
+
+If a project is currently building the `blink(1) <http://thingm.com/products/blink-1.html>`_ will pulse. Since Jenkins can build multiple software projects at
+the same time, the frequency of the pulse can be used to indicate this. The frequency of the pulse (Hz) represents
+the number of projects currently building. In the case of multiple projects, the color represents and aggregated build
+state according to the following diagram:-
+
+.. figure:: _static/Jenkinsbuildstate.png
+    :align: center
+
+In addition to the color and the pulse, the brightness of the `blink(1) <http://thingm.com/products/blink-1.html>`_ represents the age of the state change e.g.
+recent state changes are bright and old are dim.
+
+
+Additional goals for this project
+---------------------------------
+
+* Using Python 3.x
+* Using generators
+* Unit testing (including mocking)
+* Using github pages
+* Using Sphinx documentation
+* Using Travis CI
+* Using Coveralls code coverage
